@@ -1,0 +1,19 @@
+{
+  "name": "toy-problems",
+  "version": "1.0.0",
+  "description": "Various coding challenges just for fun",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willramsey/toy-problems.git"
+  },
+  "author": "Will Ramsey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willramsey/toy-problems/issues"
+  },
+  "homepage": "https://github.com/willramsey/toy-problems#readme"
+}
