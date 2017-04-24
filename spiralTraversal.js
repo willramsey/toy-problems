@@ -12,4 +12,7 @@
     returns [1, 2, 3, 6, 9, 8, 7, 4, 5]
  */
 
+var spiralTraversal = function() {};
 
+
+module.exports = spiralTraversal;
