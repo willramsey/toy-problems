@@ -24,26 +24,31 @@
  *
  */
 
-module.exports = function balancedParens(input) {
+module.exports = function balancedParens(input, rules) {
   var stack = [];
-  var pairs = {
-    '{': '}',
+  var rules = rules || {
     '[': ']',
-    '(': ')'
+    '(': ')',
+    '{': '}'
   };
 
-  for (var i = 0; i < input.length; i++) {
-    var chr = input[i];
+  // create a filter object based on the given or default rule set
+  var startChars = Object.keys(rules);
+  var filterChars = startChars.reduce(function(m, i) {
+    return m + i + rules[i];
+  }, '');
 
-    if (pairs[chr]) {
-      stack.push(chr);
-    } else if (chr === '}' || chr === ']' || chr === ')') {
-      if (pairs[stack.pop()] !== chr) {
-        return false;
-      }
+  for ( var i = 0; i < input.length; i++ ) {
+    var c = input[i];
+
+    if ( filterChars.indexOf(c) < 0 ) {
+      continue;
+    } else if ( startChars.indexOf(c) >= 0 ) {
+      stack.push(c);
+    } else if ( c !== rules[stack.pop()] ) {
+      return false;
     }
   }
 
-  //return false if there are any unclosed brackets
   return stack.length === 0;
 };
