@@ -24,12 +24,26 @@
  *
  */
 
-module.exports = function balancedParens(string) {
-  return !string.split('').reduce(function(previous, char) {
-    if (previous < 0) { return previous; }
-    if (char === '(') { return ++previous; }
-    if (char === ')') { return --previous; }
+module.exports = function balancedParens(input) {
+  var stack = [];
+  var pairs = {
+    '{': '}',
+    '[': ']',
+    '(': ')'
+  };
 
-    return previous;
-  }, 0);
+  for (var i = 0; i < input.length; i++) {
+    var chr = input[i];
+
+    if (pairs[chr]) {
+      stack.push(chr);
+    } else if (chr === '}' || chr === ']' || chr === ')') {
+      if (pairs[stack.pop()] !== chr) {
+        return false;
+      }
+    }
+  }
+
+  //return false if there are any unclosed brackets
+  return stack.length === 0;
 };
