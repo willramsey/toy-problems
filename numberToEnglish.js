@@ -91,5 +91,21 @@ module.exports = Number.prototype.toEnglish = function () {
     }
   }
 
+  if (decimalPart) {
+    place = 1;
+    do {
+      place *= 10;
+      decimalPart *= 10;
+    } while (Math.floor(decimalPart) !== decimalPart);
+    var pluralize = decimalPart === 1 ? '' : 's';
+    // decimal place names are the same as number names, but hyphenated and ignoring "one"
+    decimalString = decimalPart.toEnglish() + ' ' + place.toEnglish().replace('one ', '').replace(/ /, '-') + 'th' + pluralize;
+    if (output === 'zero') {
+      output = decimalString;
+    } else {
+      output += ' and ' + decimalString;
+    }
+  }
+
   return output;
 };
