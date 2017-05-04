@@ -50,6 +50,24 @@ var Queue = function() {
 
 Tree.prototype.BFSelect = function(filter) {
   // return an array of values for which the function filter(value, depth) returns true
+  var queue = new Queue();
+  var results = [];
+  var item;
+  queue.push({tree: this, depth: 0});
+
+  while (item = queue.pop()) {
+    var tree = item.tree;
+    var depth = item.depth;
+    if (filter(tree.value, depth)) {
+      results.push(tree.value);
+    }
+    for (var i = 0; i < tree.children.length; i++) {
+      var child = tree.children[i];
+      queue.push({tree: child, depth: depth + 1});
+    }
+  }
+
+  return results;
 };
 
 /**
