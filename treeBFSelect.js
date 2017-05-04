@@ -35,6 +35,17 @@ var Tree = function(value) {
   this.children = [];
 };
 
+var Queue = function() {
+  var storage = [];
+
+  this.push = function(item) {
+    storage.push(item);
+  };
+
+  this.pop = function() {
+    return storage.shift();
+  };
+};
 
 
 Tree.prototype.BFSelect = function(filter) {
