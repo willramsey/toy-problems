@@ -53,8 +53,43 @@ var numbersToPlace = {
   1000000000000000000: 'quintillion',
 };
 
-Number.prototype.toEnglish = function () {
+module.exports = Number.prototype.toEnglish = function () {
   // return my value as english words
-};
+  var number = this.valueOf();
+  var place, numberInPlace, numberLeft;
+  var decimalPart;
+  var output, restOfString, decimalString;
+  // separate decimal part for later
+  if (number % 1 !== 0) {
+    decimalPart = number % 1;
+    number = Math.floor(number);
+  }
+  if (numbersToWords[number]) {
+    output = numbersToWords[number];
+  } else if (number < 100) {
+    // numbers less than 100 are a multiple of 10 and a single digit, hyphenated
+    numberInPlace = Math.floor(number / 10);
+    numberLeft = number % 10;
+    output = numbersToWords[numberInPlace * 10] + '-' + (numberLeft).toEnglish();
+  } else {
+    if (number < 1000) {
+      place = 100;
+    } else {
+      place = 1000;
+      while (place * 1000 <= number) {
+        place *= 1000;
+      }
+    }
+    numberInPlace = Math.floor(number / place);
+    numberLeft = number % place;
+    // assemble this 1000s place
+    output = numberInPlace.toEnglish() + ' ' + numbersToPlace[place];
+    // assemble the rest of the number
+    restOfString = (numberLeft).toEnglish();
+    if (restOfString !== 'zero') {
+      output += ' ' + restOfString;
+    }
+  }
 
-module.exports = Number;
+  return output;
+};
