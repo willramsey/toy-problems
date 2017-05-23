@@ -15,3 +15,5 @@
 var allAnagrams = function(string) {
   // Your code here.
 };
+
+module.exports = allAnagrams;
