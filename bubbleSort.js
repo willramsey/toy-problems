@@ -37,3 +37,5 @@ var i;
 var bubbleSort = function(array) {
   // Your code here.
 };
+
+module.exports = bubbleSort;
