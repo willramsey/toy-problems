@@ -37,5 +37,32 @@
 
 
 var characterFrequency = function(string) {
-  return result;
+  var results = [];
+  var charFreqDict = {};
+  var chars = string.split('');
+
+  chars.forEach(function(char) {
+    if (char in charFreqDict ) {
+     charFreqDict[char][1]++;
+    } else {
+     charFreqDict[char] = [char, 1];
+    }
+  });
+
+  for (char in charFreqDict) {
+    results.push(charFreqDict[char]);
+  }
+
+  results.sort(function(a, b) {
+    if (a[1] < b[1]) { return 1; }
+    if (a[1] > b[1]) { return -1; }    
+    if (a[0] < b[0]) { return -1; }
+    if (a[0] > b[0]) { return 1; }
+  });
+
+  return results;
 };
+
+console.log(characterFrequency('aaccddd'));
+
+module.exports = characterFrequency;
