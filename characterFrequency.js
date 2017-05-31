@@ -55,14 +55,12 @@ var characterFrequency = function(string) {
 
   results.sort(function(a, b) {
     if (a[1] < b[1]) { return 1; }
-    if (a[1] > b[1]) { return -1; }    
+    if (a[1] > b[1]) { return -1; }
     if (a[0] < b[0]) { return -1; }
     if (a[0] > b[0]) { return 1; }
   });
 
   return results;
 };
-
-console.log(characterFrequency('aaccddd'));
 
 module.exports = characterFrequency;
