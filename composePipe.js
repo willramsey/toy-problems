@@ -34,29 +34,25 @@
 'use strict';
 
 var compose = function() {
-  var funcs = Array.prototype.slice.call(arguments);
 
-  return function(input) {
-    var result = input;
-    for (var i = funcs.length - 1; i >= 0; i--) {
-      result = funcs[i](result);
-    }
+  var args = Array.prototype.slice.call(arguments);
 
-    return result;
+  return function(val) {
+    return args.reduceRight(function(memo, fn) {
+      return fn(memo);
+    }, val);
   };
-}
+  };
 
 var pipe = function() {
-  var funcs = Array.prototype.slice.call(arguments);
 
-  return function(input) {
-    var result = input;
-    for (var i = 0; i < funcs.length; i++) {
-      result = funcs[i](result);
-    }
+  var args = Array.prototype.slice.call(arguments);
 
-    return result;
-  }
+  return function(val) {
+    return args.reduce(function(memo, fn) {
+      return fn(memo);
+    }, val);
+  };
 };
 
 module.exports = {
