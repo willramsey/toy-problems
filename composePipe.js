@@ -47,6 +47,16 @@ var compose = function() {
 }
 
 var pipe = function() {
+  var funcs = Array.prototype.slice.call(arguments);
+
+  return function(input) {
+    var result = input;
+    for (var i = 0; i < funcs.length; i++) {
+      result = funcs[i](result);
+    }
+
+    return result;
+  }
 };
 
 module.exports = {
