@@ -1,3 +1,7 @@
+var bind = require('./functionBind').funcBind;
+Function.prototype.bind = require('./functionBind').methBind;
+var should = require('chai').should();
+
 describe('bind', function() {
   it('should exist', function() {
     should.exist(bind);
