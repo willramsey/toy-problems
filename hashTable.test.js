@@ -1,3 +1,6 @@
+var makeHashTable = require('./hashTable');
+var should = require('chai').should();
+
 describe('makeHashTable', function() {
   it('should exist', function() {
     should.exist(makeHashTable);
