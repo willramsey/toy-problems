@@ -31,18 +31,49 @@
  */
 
 var LRUCache = function (limit) {
+  this._limit = limit || 10000;
+  this._size = 0;
+  this._storage = {};
+  this._order = new List();
 };
 
 var LRUCacheItem = function (val, key) {
-};
+  this.val = val === undefined ? null : val;
+  this.key = key === undefined ? null : key;
+  this.node = null;
+}
 
 LRUCache.prototype.size = function () {
+  return this._size;
 };
 
 LRUCache.prototype.get = function (key) {
+  if (!(key in this._storage)) { return null; }
+
+  var item = this._storage[key];
+  this._order.moveToFront(item.node);
+
+  return item.val;
 };
 
 LRUCache.prototype.set = function (key, val) {
+  if (this._storage.hasOwnProperty(key)) {
+    var item = this._storage[key];
+    item.val = val;
+    this._order.moveToFront(item.node);
+  } else {
+
+    if (this._size >= this._limit) {
+      var node = this._order.pop();
+      delete this._storage[node.key];
+      this._size = Math.max(0, this._size - 1);
+    }
+
+    var item = new LRUCacheItem(val, key);
+    item.node = this._order.unshift(item);
+    this._storage[key] = item;
+    this._size++;
+  }
 };
 
 
@@ -170,3 +201,5 @@ ListNode.prototype.delete = function () {
   if (this.prev) { this.prev.next = this.next; }
   if (this.next) { this.next.prev = this.prev; }
 };
+
+module.exports = LRUCache;
